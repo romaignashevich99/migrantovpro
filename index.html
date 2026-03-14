@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МигрантовПРО — Патенты и документы для мигрантов в Москве</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Roboto:wght@400;500;700&amp;display=swap');
+        
+        .tail-container {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        
+       .hero-bg {
+    background: linear-gradient(rgba(5, 15, 40, 0.92), rgba(15, 30, 70, 0.82)), 
+                url('hero.jpg') center/cover no-repeat fixed;
+}
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+        
+        .lang-btn {
+            transition: all 0.3s;
+        }
+        
+        .lang-btn.active {
+            background-color: #1e40af;
+            color: white;
+            border-color: #1e40af;
+        }
+        
+        .flag {
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+        
+        .section-title {
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, #1e40af, #f59e0b);
+            border-radius: 9999px;
+        }
+
+        /* НОВАЯ ТАЙМЛАЙН */
+        .timeline-line {
+            position: absolute;
+            left: 31px;
+            top: 64px;
+            bottom: 20px;
+            width: 6px;
+            background: linear-gradient(to bottom, #1e40af, #10b981);
+            border-radius: 9999px;
+            z-index: 0;
+        }
+        
+        .timeline-dot {
+            width: 64px;
+            height: 64px;
+            background: white;
+            border: 6px solid #1e40af;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e40af;
+            box-shadow: 0 10px 15px -3px rgb(30 64 175 / 0.2);
+            z-index: 10;
+        }
+        
+        .timeline-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .timeline-card:hover {
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body class="tail-container text-gray-800 bg-gray-50">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- НОВЫЙ ЛОГОТИП -->
+            <div class="flex items-center gap-3">
+                <img src="logo.png" alt="МигрантовПРО" class="h-20 w-auto">
+                <div>
+                    <span class="text-3xl font-bold tracking-tighter text-blue-900" data-lang-key="logo">МигрантовПРО</span>
+                    <span class="block text-[10px] text-gray-500 -mt-1 tracking-[2px]" data-lang-key="tagline">МОСКВА 2026</span>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#home" onclick="smoothScrollTo('home')" class="hover:text-blue-600 transition-colors" data-lang-key="nav_home">Главная</a>
+                <a href="#packages" onclick="smoothScrollTo('packages')" class="hover:text-blue-600 transition-colors" data-lang-key="nav_packages">Пакеты</a>
+                <a href="#services" onclick="smoothScrollTo('services')" class="hover:text-blue-600 transition-colors" data-lang-key="nav_services">Услуги</a>
+                <a href="#how" onclick="smoothScrollTo('how')" class="hover:text-blue-600 transition-colors" data-lang-key="nav_how">Как это работает</a>
+                <a href="#contact" onclick="smoothScrollTo('contact')" class="hover:text-blue-600 transition-colors" data-lang-key="nav_contact">Контакты</a>
+            </div>
+
+            <!-- Language Switcher -->
+            <div class="flex items-center gap-1 bg-gray-100 rounded-3xl p-1 shadow-inner">
+                <button onclick="switchLanguage('ru')" id="lang-ru" class="lang-btn active px-4 py-2 rounded-3xl text-xs font-semibold flex items-center gap-2">
+                    <span class="flag">🇷🇺</span><span data-lang-key="lang_ru">RU</span>
+                </button>
+                <button onclick="switchLanguage('tj')" id="lang-tj" class="lang-btn px-4 py-2 rounded-3xl text-xs font-semibold flex items-center gap-2">
+                    <span class="flag">🇹🇯</span><span data-lang-key="lang_tj">TJ</span>
+                </button>
+                <button onclick="switchLanguage('uz')" id="lang-uz" class="lang-btn px-4 py-2 rounded-3xl text-xs font-semibold flex items-center gap-2">
+                    <span class="flag">🇺🇿</span><span data-lang-key="lang_uz">UZ</span>
+                </button>
+                <button onclick="switchLanguage('kg')" id="lang-kg" class="lang-btn px-4 py-2 rounded-3xl text-xs font-semibold flex items-center gap-2">
+                    <span class="flag">🇰🇬</span><span data-lang-key="lang_kg">KG</span>
+                </button>
+            </div>
+
+            <button onclick="toggleMobileMenu()" class="md:hidden text-3xl text-blue-900">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-6 py-6">
+            <div class="flex flex-col gap-6 text-lg font-medium">
+                <a href="#home" onclick="toggleMobileMenu();smoothScrollTo('home')" data-lang-key="nav_home">Главная</a>
+                <a href="#packages" onclick="toggleMobileMenu();smoothScrollTo('packages')" data-lang-key="nav_packages">Пакеты</a>
+                <a href="#services" onclick="toggleMobileMenu();smoothScrollTo('services')" data-lang-key="nav_services">Услуги</a>
+                <a href="#how" onclick="toggleMobileMenu();smoothScrollTo('how')" data-lang-key="nav_how">Как это работает</a>
+                <a href="#contact" onclick="toggleMobileMenu();smoothScrollTo('contact')" data-lang-key="nav_contact">Контакты</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home" class="hero-bg h-screen flex items-center text-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="max-w-4xl mx-auto">
+                <span class="inline-block bg-white/20 backdrop-blur-md text-white text-sm px-6 py-2 rounded-3xl mb-6 font-medium" data-lang-key="hero_badge">Москва </span>
+                
+                <h1 id="hero-title" class="text-6xl md:text-7xl font-bold leading-none tracking-tighter mb-6">
+                    Патент и документы<br>для мигрантов<br><span class="text-orange-300">без очередей</span>
+                </h1>
+                
+                <p id="hero-subtitle" class="text-2xl md:text-3xl font-light mb-10 text-white/90 max-w-2xl mx-auto">
+                    Под ключ за 3–7 дней. Все цены актуальны с 2026 года.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#packages" onclick="smoothScrollTo('packages')" 
+                       class="bg-white text-blue-900 hover:bg-orange-400 hover:text-white transition-all px-10 py-6 rounded-3xl text-xl font-semibold shadow-2xl flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span data-lang-key="hero_cta1">Выбрать пакет</span>
+                    </a>
+                    
+                    <a href="https://t.me/migrantovprobot" target="_blank"
+                       class="border-2 border-white hover:bg-white hover:text-blue-900 transition-all px-10 py-6 rounded-3xl text-xl font-semibold flex items-center justify-center gap-3">
+                        <i class="fa-brands fa-telegram"></i>
+                        <span data-lang-key="hero_cta2">Написать в Telegram</span>
+                    </a>
+                </div>
+                
+                <div class="mt-12 flex justify-center gap-8 text-sm">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-shield-halved text-3xl text-green-400"></i>
+                        <div class="text-left">
+                            <div class="font-semibold" data-lang-key="hero_trust1">Гарантия возврата</div>
+                            <div class="text-white/70 text-xs" data-lang-key="hero_trust1_sub">при отказе</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-clock text-3xl text-orange-400"></i>
+                        <div class="text-left">
+                            <div class="font-semibold" data-lang-key="hero_trust2">От 3 дней</div>
+                            <div class="text-white/70 text-xs" data-lang-key="hero_trust2_sub">получение патента</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 animate-bounce">
+            <i class="fa-solid fa-chevron-down text-4xl text-white/60"></i>
+        </div>
+    </section>
+
+    <!-- PACKAGES -->
+    <section id="packages" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-orange-500 font-medium tracking-widest text-sm" data-lang-key="packages_badge">ВЫБЕРИ СВОЙ КОМФОРТ</span>
+                <h2 id="packages_title" class="section-title text-5xl font-bold text-blue-900 mt-3" data-lang-key="packages_title">Пакеты услуг</h2>
+                <p class="mt-4 text-xl text-gray-600 max-w-xl mx-auto" data-lang-key="packages_subtitle">
+                    Все цены — под ключ. Патент (авансовый платёж 10 000 ₽/мес) оплачиваете сами.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- ЭКОНОМ -->
+                <div class="card-hover bg-white border-2 border-blue-600 rounded-3xl overflow-hidden">
+                    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-8">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="uppercase text-xs tracking-widest font-medium" data-lang-key="package_econ_name">Эконом</span>
+                                <h3 class="text-4xl font-bold mt-2" data-lang-key="package_econ_price">15 000 – 20 000 ₽</h3>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs bg-white/20 px-4 py-1 rounded-2xl">Самый популярный</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-6">
+                        <ul class="space-y-4 text-gray-700">
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_econ_item1">Перевод + нотариус паспорта</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_econ_item2">Базовая медкомиссия</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_econ_item3">Экзамен на патент</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_econ_item4">Миграционный учёт + подача</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_econ_item5">Уведомление МВД</span></li>
+                        </ul>
+                        <div class="pt-6 border-t">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="font-medium text-gray-500" data-lang-key="package_for">Для кого:</span>
+                                <span class="text-blue-600 font-semibold" data-lang-key="package_econ_for">Новые мигранты, сезонники</span>
+                            </div>
+                        </div>
+                        <button onclick="selectPackage('Эконом')" class="w-full py-5 bg-blue-700 hover:bg-blue-600 text-white font-semibold rounded-2xl transition-all">
+                            <span data-lang-key="btn_choose">Выбрать пакет Эконом</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- КОМФОРТ -->
+                <div class="card-hover bg-white border-2 border-orange-500 rounded-3xl overflow-hidden relative">
+                    <div class="absolute top-6 right-6 bg-orange-500 text-white text-xs font-bold px-6 py-2 rounded-bl-3xl rounded-tr-3xl shadow">ХИТ 2026</div>
+                    <div class="bg-gradient-to-r from-orange-500 to-amber-600 text-white p-8">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="uppercase text-xs tracking-widest font-medium" data-lang-key="package_comf_name">Комфорт</span>
+                                <h3 class="text-4xl font-bold mt-2" data-lang-key="package_comf_price">25 000 – 35 000 ₽</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-6">
+                        <ul class="space-y-4 text-gray-700">
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_comf_item1">Всё из Эконом +</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_comf_item2">ДМС на год</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_comf_item3">Выезд специалиста</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_comf_item4">Запись в ММЦ без очереди</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_comf_item5">Уведомление работодателя</span></li>
+                        </ul>
+                        <div class="pt-6 border-t">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="font-medium text-gray-500" data-lang-key="package_for">Для кого:</span>
+                                <span class="text-orange-600 font-semibold" data-lang-key="package_comf_for">Работающие мигранты и семьи</span>
+                            </div>
+                        </div>
+                        <button onclick="selectPackage('Комфорт')" class="w-full py-5 bg-gradient-to-r from-orange-500 to-amber-600 text-white font-semibold rounded-2xl transition-all">
+                            <span data-lang-key="btn_choose">Выбрать пакет Комфорт</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- КОМФОРТ+ -->
+                <div class="card-hover bg-white border-2 border-emerald-600 rounded-3xl overflow-hidden">
+                    <div class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-8">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="uppercase text-xs tracking-widest font-medium" data-lang-key="package_vip_name">Комфорт +</span>
+                                <h3 class="text-4xl font-bold mt-2" data-lang-key="package_vip_price">40 000 – 50 000 ₽</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-6">
+                        <ul class="space-y-4 text-gray-700">
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_vip_item1">Всё из Комфорт +</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_vip_item2">Годовая поддержка</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_vip_item3">Помощь с РВП / ВНЖ</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_vip_item4">Гарантия возврата денег</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-green-500 mt-1"></i><span data-lang-key="package_vip_item5">VIP-запись и ускорение</span></li>
+                        </ul>
+                        <div class="pt-6 border-t">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="font-medium text-gray-500" data-lang-key="package_for">Для кого:</span>
+                                <span class="text-emerald-600 font-semibold" data-lang-key="package_vip_for">Семьи и долгосрочные клиенты</span>
+                            </div>
+                        </div>
+                        <button onclick="selectPackage('Комфорт+')" class="w-full py-5 bg-emerald-700 hover:bg-emerald-600 text-white font-semibold rounded-2xl transition-all">
+                            <span data-lang-key="btn_choose">Выбрать пакет Комфорт+</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ -->
+    <section id="services" class="py-24 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 id="services_title" class="section-title text-5xl font-bold text-blue-900" data-lang-key="services_title">Дополнительные услуги</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-8 rounded-3xl hover:shadow-xl transition-all">
+                    <i class="fa-solid fa-car text-4xl text-orange-500 mb-6"></i>
+                    <h4 class="font-semibold text-xl mb-2" data-lang-key="add1">Выезд специалиста</h4>
+                    <p class="text-gray-600" data-lang-key="add1_price">от 5 000 ₽</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl hover:shadow-xl transition-all">
+                    <i class="fa-solid fa-camera text-4xl text-orange-500 mb-6"></i>
+                    <h4 class="font-semibold text-xl mb-2" data-lang-key="add2">Фото + копии документов</h4>
+                    <p class="text-gray-600" data-lang-key="add2_price">1 000 ₽</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl hover:shadow-xl transition-all">
+                    <i class="fa-solid fa-ban text-4xl text-orange-500 mb-6"></i>
+                    <h4 class="font-semibold text-xl mb-2" data-lang-key="add3">Проверка запрета на въезд</h4>
+                    <p class="text-gray-600" data-lang-key="add3_price">2 500 ₽</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl hover:shadow-xl transition-all">
+                    <i class="fa-solid fa-home text-4xl text-orange-500 mb-6"></i>
+                    <h4 class="font-semibold text-xl mb-2" data-lang-key="add4">Помощь с жильём</h4>
+                    <p class="text-gray-600" data-lang-key="add4_price">1 000 ₽</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl hover:shadow-xl transition-all">
+                    <i class="fa-solid fa-language text-4xl text-orange-500 mb-6"></i>
+                    <h4 class="font-semibold text-xl mb-2" data-lang-key="add5">Переводчик на месте</h4>
+                    <p class="text-gray-600" data-lang-key="add5_price">2 000 – 5 000 ₽</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl hover:shadow-xl transition-all">
+                    <i class="fa-solid fa-briefcase text-4xl text-orange-500 mb-6"></i>
+                    <h4 class="font-semibold text-xl mb-2" data-lang-key="add6">Помощь с трудоустройством</h4>
+                    <p class="text-gray-600" data-lang-key="add6_price">Бесплатно в пакете Комфорт+</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- КАК ЭТО РАБОТАЕТ -->
+    <section id="how" class="py-24 bg-white relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-orange-500 font-medium tracking-widest text-sm" data-lang-key="how_badge">ПРОСТО И БЫСТРО</span>
+                <h2 id="how_title" class="section-title text-5xl font-bold text-blue-900 mt-3" data-lang-key="how_title">Как это работает</h2>
+            </div>
+
+            <div class="max-w-3xl mx-auto relative">
+                <div class="timeline-line hidden md:block"></div>
+
+                <div class="flex flex-col md:flex-row gap-8 mb-16 relative timeline-card">
+                    <div class="timeline-dot mx-auto md:mx-0 flex-shrink-0">1</div>
+                    <div class="flex-1 bg-white border border-blue-200 rounded-3xl p-8 shadow-sm">
+                        <i class="fa-solid fa-paper-plane text-5xl text-blue-500 mb-6"></i>
+                        <h4 class="font-semibold text-2xl mb-3" data-lang-key="step1">Оставляете заявку</h4>
+                        <p class="text-gray-600 leading-relaxed" data-lang-key="step1_desc">По телефону, Telegram или форме на сайте — 30 секунд</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 mb-16 relative timeline-card">
+                    <div class="timeline-dot mx-auto md:mx-0 flex-shrink-0">2</div>
+                    <div class="flex-1 bg-white border border-blue-200 rounded-3xl p-8 shadow-sm">
+                        <i class="fa-solid fa-comments text-5xl text-blue-500 mb-6"></i>
+                        <h4 class="font-semibold text-2xl mb-3" data-lang-key="step2">Консультация на вашем языке</h4>
+                        <p class="text-gray-600 leading-relaxed" data-lang-key="step2_desc">Русский, таджикский, узбекский, киргизский</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 mb-16 relative timeline-card">
+                    <div class="timeline-dot mx-auto md:mx-0 flex-shrink-0">3</div>
+                    <div class="flex-1 bg-white border border-blue-200 rounded-3xl p-8 shadow-sm">
+                        <i class="fa-solid fa-folder-open text-5xl text-blue-500 mb-6"></i>
+                        <h4 class="font-semibold text-2xl mb-3" data-lang-key="step3">Собираем документы</h4>
+                        <p class="text-gray-600 leading-relaxed" data-lang-key="step3_desc"> У нас в офисе или с выездом к вам — всё под ключ</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 relative timeline-card">
+                    <div class="timeline-dot mx-auto md:mx-0 flex-shrink-0">4</div>
+                    <div class="flex-1 bg-white border border-blue-200 rounded-3xl p-8 shadow-sm">
+                        <i class="fa-solid fa-check-circle text-5xl text-emerald-500 mb-6"></i>
+                        <h4 class="font-semibold text-2xl mb-3" data-lang-key="step4">Подача и контроль</h4>
+                        <p class="text-gray-600 leading-relaxed" data-lang-key="step4_desc">Мы всё делаем за вас. Патент у вас на руках!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA BAR -->
+    <div class="bg-blue-900 py-8">
+        <div class="max-w-7xl mx-auto px-6 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-2xl font-medium" data-lang-key="cta_text">Готовы оформить патент уже сегодня?</div>
+            <a href="https://t.me/migrantovprobot" target="_blank" 
+               class="bg-white text-blue-900 px-10 py-5 rounded-3xl font-semibold flex items-center gap-3 hover:scale-105 transition-transform">
+                <i class="fa-brands fa-telegram text-xl"></i>
+                <span data-lang-key="cta_button">Написать в Telegram прямо сейчас</span>
+            </a>
+        </div>
+    </div>
+
+   <!-- FOOTER / CONTACT -->
+<footer id="contact" class="bg-gray-900 text-white pt-20 pb-12">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16">
+        <div>
+            <div class="flex items-center gap-4 mb-8">
+                <img src="logo.png" alt="МигрантовПРО" 
+                     class="h-20 w-auto drop-shadow-[0_10px_20px_rgba(255,255,255,0.3)] bg-white p-2 rounded-2xl">
+                <span class="text-4xl font-bold" data-lang-key="logo">МигрантовПРО</span>
+            </div>
+            <p class="text-gray-400 max-w-xs" data-lang-key="footer_desc">
+                Официальная помощь мигрантам из Центральной Азии в Москве с 2022 года.
+            </p>
+            
+            <div class="mt-12">
+                <div class="flex items-center gap-4 text-4xl">
+                    <a href="https://t.me/migrantovprobot" target="_blank" class="hover:text-sky-400 transition-colors"><i class="fa-brands fa-telegram"></i></a>
+                    <a href="tel:+74951234567" class="hover:text-blue-400 transition-colors"><i class="fa-solid fa-phone"></i></a>
+                </div>
+                <div class="mt-6 text-3xl font-medium" data-lang-key="phone">+7 (977) 365-37-31</div>
+                <div class="text-sm text-gray-500 mt-1" data-lang-key="work_hours">Ежедневно 8:00 – 21:00</div>
+            </div>
+        </div>
+        
+        <!-- БЛОК БЫСТРАЯ ЗАЯВКА (полностью рабочий) -->
+        <div class="bg-white/10 backdrop-blur-xl p-8 rounded-3xl">
+            <h3 class="text-2xl font-semibold mb-6" data-lang-key="form_title">Быстрая заявка</h3>
+            <form id="contact-form" onsubmit="submitForm(event)">
+                <div class="grid grid-cols-2 gap-4">
+                    <input id="name" type="text" placeholder="Имя" 
+                           class="bg-white/10 border border-white/30 rounded-2xl px-6 py-5 text-black placeholder:text-white/60 focus:outline-none focus:border-orange-400">
+                    <input id="phone" type="tel" placeholder="Телефон или Telegram" 
+                           class="bg-white/10 border border-white/30 rounded-2xl px-6 py-5 text-black placeholder:text-white/60 focus:outline-none focus:border-orange-400" required>
+                </div>
+                <select id="package-select" class="mt-4 w-full bg-white/10 border border-white/30 rounded-2xl px-6 py-5 text-black focus:outline-none focus:border-orange-400">
+                    <option value="" data-lang-key="form_select">Выберите пакет</option>
+                    <option value="Эконом" data-lang-key="package_econ_name">Эконом</option>
+                    <option value="Комфорт" data-lang-key="package_comf_name">Комфорт</option>
+                    <option value="Комфорт+" data-lang-key="package_vip_name">Комфорт +</option>
+                </select>
+                
+                <button type="submit"
+                        class="mt-8 w-full py-6 bg-orange-500 hover:bg-orange-600 transition-colors rounded-3xl font-semibold text-lg">
+                    <span data-lang-key="form_button">Отправить заявку — 30 сек</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-6 mt-20 pt-10 border-t border-white/10 text-xs text-gray-500 flex flex-wrap justify-between gap-y-4">
+        <div>© 2026 МигрантовПРО. Все права защищены.</div>
+        <div class="flex gap-6">
+            <a href="#" class="hover:text-white transition-colors" data-lang-key="footer_link1">Политика конфиденциальности</a>
+            <a href="#" class="hover:text-white transition-colors" data-lang-key="footer_link2">Договор оферты</a>
+        </div>
+        <div>Москва, ул. Тверская, д. 15, офис 312</div>
+    </div>
+</footer>
+
+    <!-- SUCCESS MODAL -->
+    <div id="success-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
+        <div class="bg-white rounded-3xl max-w-md w-full mx-4 p-10 text-center">
+            <i class="fa-solid fa-circle-check text-7xl text-green-500 mb-6"></i>
+            <h3 class="text-3xl font-bold mb-4" data-lang-key="modal_title">Заявка отправлена!</h3>
+            <p class="text-gray-600" data-lang-key="modal_text">Наш специалист свяжется с вами в течение 15 минут</p>
+            <button onclick="closeModal()" class="mt-10 px-12 py-5 bg-blue-900 text-white rounded-2xl font-medium">
+                <span data-lang-key="modal_close">Отлично, жду звонка</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            ru: {
+                logo: "МигрантовПРО", tagline: "МОСКВА 2026",
+                nav_home: "Главная", nav_packages: "Пакеты", nav_services: "Услуги", nav_how: "Как это работает", nav_contact: "Контакты",
+                lang_ru: "RU", lang_tj: "TJ", lang_uz: "UZ", lang_kg: "KG",
+                hero_badge: "Москва",
+                hero_title: "Патент и документы<br>для мигрантов<br><span class='text-orange-300'>без очередей</span>",
+                hero_subtitle: "Под ключ за 3–7 дней. Все цены актуальны с 2026 года.",
+                hero_cta1: "Выбрать пакет", hero_cta2: "Написать в Telegram",
+                hero_trust1: "Гарантия возврата", hero_trust1_sub: "при отказе",
+                hero_trust2: "От 3 дней", hero_trust2_sub: "получение патента",
+                packages_badge: "ВЫБЕРИ СВОЙ КОМФОРТ", packages_title: "Пакеты услуг",
+                packages_subtitle: "Все цены — под ключ. Патент (авансовый платёж 10 000 ₽/мес) оплачиваете сами.",
+                package_econ_name: "Эконом", package_econ_price: "15 000 – 20 000 ₽",
+                package_econ_item1: "Перевод + нотариус паспорта", package_econ_item2: "Базовая медкомиссия",
+                package_econ_item3: "Экзамен на патент", package_econ_item4: "Миграционный учёт + подача",
+                package_econ_item5: "Уведомление МВД", package_econ_for: "Новые мигранты, сезонники",
+                package_comf_name: "Комфорт", package_comf_price: "25 000 – 35 000 ₽",
+                package_comf_item1: "Всё из Эконом +", package_comf_item2: "ДМС на год",
+                package_comf_item3: "Выезд специалиста", package_comf_item4: "Запись в ММЦ без очереди",
+                package_comf_item5: "Уведомление работодателя", package_comf_for: "Работающие мигранты и семьи",
+                package_vip_name: "Комфорт +", package_vip_price: "40 000 – 50 000 ₽",
+                package_vip_item1: "Всё из Комфорт +", package_vip_item2: "Годовая поддержка",
+                package_vip_item3: "Помощь с РВП / ВНЖ", package_vip_item4: "Гарантия возврата денег",
+                package_vip_item5: "VIP-запись и ускорение", package_vip_for: "Семьи и долгосрочные клиенты",
+                package_for: "Для кого:", btn_choose: "Выбрать пакет",
+                services_title: "Дополнительные услуги",
+                add1: "Выезд специалиста", add1_price: "от 5 000 ₽",
+                add2: "Фото + копии документов", add2_price: "1 000 ₽",
+                add3: "Проверка запрета на въезд", add3_price: "2 500 ₽",
+                add4: "Помощь с жильём", add4_price: "1 000 ₽",
+                add5: "Переводчик на месте", add5_price: "2 000 – 5 000 ₽",
+                add6: "Помощь с трудоустройством", add6_price: "Бесплатно в пакете Комфорт+",
+                how_badge: "ПРОСТО И БЫСТРО", how_title: "Как это работает",
+                step1: "Оставляете заявку", step1_desc: "По телефону, Telegram или форме на сайте — 30 секунд",
+                step2: "Консультация на вашем языке", step2_desc: "Русский, таджикский, узбекский, киргизский",
+                step3: "Собираем документы", step3_desc: "У нас в офисе или выезд к вам — всё под ключ",
+                step4: "Подача и контроль", step4_desc: "Мы всё делаем за вас. Патент у вас на руках!",
+                cta_text: "Готовы оформить патент уже сегодня?", cta_button: "Написать в Telegram прямо сейчас",
+                form_title: "Быстрая заявка", form_select: "Выберите пакет", form_button: "Отправить заявку — 30 сек",
+                footer_desc: "Официальная помощь мигрантам из Центральной Азии в Москве с 2022 года.",
+                phone: "+7 (977) 365-37-31", work_hours: "Ежедневно 8:00 – 21:00",
+                footer_link1: "Политика конфиденциальности", footer_link2: "Договор оферты",
+                modal_title: "Заявка отправлена!", modal_text: "Наш специалист свяжется с вами в течение 15 минут",
+                modal_close: "Отлично, жду звонка"
+            },
+            tj: {
+                logo: "МигрантовПРО", tagline: "МОСКАВ 2026",
+                nav_home: "Асосӣ", nav_packages: "Пакетҳо", nav_services: "Хизматҳо", nav_how: "Чӣ тавр кор мекунад", nav_contact: "Тамос",
+                lang_ru: "RU", lang_tj: "TJ", lang_uz: "UZ", lang_kg: "KG",
+                hero_badge: "Москва",
+                hero_title: "Патент ва ҳуҷҷатҳо<br>барои муҳоҷирон<br><span class='text-orange-300'>бе навбат</span>",
+                hero_subtitle: "Пурра дар 3–7 рӯз. Нархҳо аз соли 2026 эътибор доранд.",
+                hero_cta1: "Пакетро интихоб кунед", hero_cta2: "Ба Telegram нависед",
+                hero_trust1: "Кафолати баргардонидан", hero_trust1_sub: "ҳангоми рад",
+                hero_trust2: "Аз 3 рӯз", hero_trust2_sub: "гирифтани патент",
+                packages_badge: "ПАКЕТИ ХУДРО ИНТИХОБ КУНЕД", packages_title: "Пакетҳои хизматрасонӣ",
+                packages_subtitle: "Ҳама нархҳо пурра. Патентро (10 000 ₽/моҳ) худатон пардохт мекунед.",
+                package_econ_name: "Иқтисодӣ", package_econ_price: "15 000 – 20 000 ₽",
+                package_econ_item1: "Тарҷума + нотариуси шиноснома", package_econ_item2: "Комиссияи тиббӣ",
+                package_econ_item3: "Имтиҳон барои патент", package_econ_item4: "Ба ҳисоб гирифтан ва пешниҳод",
+                package_econ_item5: "Огоҳонидани МВД", package_econ_for: "Муҳоҷирони нав, мавсимӣ",
+                package_comf_name: "Комфорт", package_comf_price: "25 000 – 35 000 ₽",
+                package_comf_item1: "Ҳама аз Иқтисодӣ +", package_comf_item2: "ДМС барои 1 сол",
+                package_comf_item3: "Сафари мутахассис", package_comf_item4: "Сабти ном бе навбат",
+                package_comf_item5: "Огоҳонидани корфармо", package_comf_for: "Муҳоҷирони корӣ ва оилаҳо",
+                package_vip_name: "Комфорт +", package_vip_price: "40 000 – 50 000 ₽",
+                package_vip_item1: "Ҳама аз Комфорт +", package_vip_item2: "Дастгирии солона",
+                package_vip_item3: "Кумак барои РВП / ВНЖ", package_vip_item4: "Кафолати баргардонидан",
+                package_vip_item5: "Сабти VIP ва тезондан", package_vip_for: "Оилаҳо ва мизоҷони дарозмуддат",
+                package_for: "Барои кӣ:", btn_choose: "Пакетро интихоб кунед",
+                services_title: "Хизматҳои иловагӣ",
+                add1: "Сафари мутахассис", add1_price: "аз 5 000 ₽",
+                add2: "Аксҳо ва нусхаҳо", add2_price: "1 000 ₽",
+                add3: "Санҷиши мамнӯъият", add3_price: "2 500 ₽",
+                add4: "Кумак бо манзил", add4_price: "1 000 ₽",
+                add5: "Тарҷумон дар ҷой", add5_price: "2 000 – 5 000 ₽",
+                add6: "Кумак бо кор", add6_price: "Ройгон дар Комфорт+",
+                how_badge: "ОДДӢ ВА ТЕЗ", how_title: "Чӣ тавр кор мекунад",
+                step1: "Дархостро гузоред", step1_desc: "Тавассути телефон, Telegram ё форма — 30 сония",
+                step2: "Машварат ба забони шумо", step2_desc: "Русӣ, тоҷикӣ, ӯзбекӣ, қирғизӣ",
+                step3: "Ҳуҷҷатҳоро ҷамъ мекунем", step3_desc: "Сафар ба шумо ё онлайн — ҳамааш пурра",
+                step4: "Пешниҳод ва назорат", step4_desc: "Ҳамаашро мо мекунем. Патент дар дастатон!",
+                cta_text: "Оё омодаед патентро имрӯз ба расмият дароред?", cta_button: "Ҳоло ба Telegram нависед",
+                form_title: "Дархости зуд", form_select: "Пакетро интихоб кунед", form_button: "Дархостро фиристед — 30 сония",
+                footer_desc: "Кумакҳои расмӣ ба муҳоҷирони Осиёи Марказӣ дар Маскав аз соли 2022.",
+                phone: "+7 (977) 365-37-31", work_hours: "Ҳар рӯз 08:00 – 21:00",
+                footer_link1: "Сиёсати махфият", footer_link2: "Шартномаи оферта",
+                modal_title: "Дархост фиристода шуд!", modal_text: "Мутахассиси мо дар тӯли 15 дақиқа тамос мегирад",
+                modal_close: "Хуб, интизори занг ҳастам"
+            },
+            uz: {
+                logo: "MigrantovPRO", tagline: "MOSKVA 2026",
+                nav_home: "Bosh sahifa", nav_packages: "Paketlar", nav_services: "Xizmatlar", nav_how: "Qanday ishlaydi", nav_contact: "Aloqa",
+                lang_ru: "RU", lang_tj: "TJ", lang_uz: "UZ", lang_kg: "KG",
+                hero_badge: "Moskva",
+                hero_title: "Patent va hujjatlar<br>migrantlar uchun<br><span class='text-orange-300'>navbatsiz</span>",
+                hero_subtitle: "Kalit bilan 3–7 kunda. Narxlar 2026 yildan yangi.",
+                hero_cta1: "Paketni tanlang", hero_cta2: "Telegramga yozing",
+                hero_trust1: "Qaytarish kafolati", hero_trust1_sub: "rad etilganda",
+                hero_trust2: "3 kundan boshlab", hero_trust2_sub: "patent olish",
+                packages_badge: "O'ZINGIZNING QULAY PAKETINGIZNI TANLANG", packages_title: "Xizmat paketlari",
+                packages_subtitle: "Barcha narxlar kalit bilan. Patent (10 000 ₽/oy) o'zingiz to'laysiz.",
+                package_econ_name: "Iqtisodiy", package_econ_price: "15 000 – 20 000 ₽",
+                package_econ_item1: "Tarjima + notarius", package_econ_item2: "Asosiy tibbiy komissiya",
+                package_econ_item3: "Patent imtihoni", package_econ_item4: "Migratsiya hisobi + topshirish",
+                package_econ_item5: "MVDga xabar", package_econ_for: "Yangi migrantlar, mavsumiy ishchilar",
+                package_comf_name: "Komfort", package_comf_price: "25 000 – 35 000 ₽",
+                package_comf_item1: "Iqtisodiy +", package_comf_item2: "DMS 1 yilga",
+                package_comf_item3: "Mutaxassis chiqishi", package_comf_item4: "MMCda navbatsiz yozilish",
+                package_comf_item5: "Ish beruvchiga xabar", package_comf_for: "Ishlaydigan migrantlar va oilalar",
+                package_vip_name: "Komfort +", package_vip_price: "40 000 – 50 000 ₽",
+                package_vip_item1: "Komfort +", package_vip_item2: "Yillik qo'llab-quvvatlash",
+                package_vip_item3: "RVP / VNJ yordami", package_vip_item4: "Pul qaytarish kafolati",
+                package_vip_item5: "VIP yozilish va tezlashtirish", package_vip_for: "Oilalar va uzoq muddatli mijozlar",
+                package_for: "Kim uchun:", btn_choose: "Paketni tanlash",
+                services_title: "Qo‘shimcha xizmatlar",
+                add1: "Mutaxassis chiqishi", add1_price: "5 000 ₽ dan",
+                add2: "Foto va nusxalar", add2_price: "1 000 ₽",
+                add3: "Kirish taqiqini tekshirish", add3_price: "2 500 ₽",
+                add4: "Turar joy yordami", add4_price: "1 000 ₽",
+                add5: "Tarjimon joyida", add5_price: "2 000 – 5 000 ₽",
+                add6: "Ishga joylashish yordami", add6_price: "Komfort+ da bepul",
+                how_badge: "ODDIY VA TEZ", how_title: "Qanday ishlaydi",
+                step1: "So‘rov qoldiring", step1_desc: "Telefon, Telegram yoki sayt orqali — 30 soniya",
+                step2: "Sizning tilingizda maslahat", step2_desc: "Rus, tojik, o‘zbek, qirg‘iz",
+                step3: "Hujjatlarni yig‘amiz", step3_desc: "Sizga chiqish yoki onlayn — hammasi kalit bilan",
+                step4: "Topshirish va nazorat", step4_desc: "Hammasini biz qilamiz. Patent qo‘lingizda!",
+                cta_text: "Bugun patentni rasmiylashtirishga tayyormisiz?", cta_button: "Hozir Telegramga yozing",
+                form_title: "Tez so‘rov", form_select: "Paketni tanlang", form_button: "So‘rov yuborish — 30 soniya",
+                footer_desc: "Markaziy Osiyo migrantlariga Moskvada rasmiy yordam 2022 yildan.",
+                phone: "+7 (977) 365-37-31", work_hours: "Har kuni 08:00 – 21:00",
+                footer_link1: "Maxfiylik siyosati", footer_link2: "Oferta shartnomasi",
+                modal_title: "So‘rov yuborildi!", modal_text: "Mutaxassisimiz 15 daqiqa ichida bog‘lanadi",
+                modal_close: "Zo‘r, qo‘ng‘iroqni kutaman"
+            },
+            kg: {
+                logo: "МигрантовПРО", tagline: "МОСКВА 2026",
+                nav_home: "Башкы бет", nav_packages: "Пакеттер", nav_services: "Кызматтар", nav_how: "Кантип иштейт", nav_contact: "Байланыш",
+                lang_ru: "RU", lang_tj: "TJ", lang_uz: "UZ", lang_kg: "KG",
+                hero_badge: "Москва",
+                hero_title: "Патент жана документтер<br>мигранттар үчүн<br><span class='text-orange-300'>кезек жок</span>",
+                hero_subtitle: "Толук 3–7 күндө. Баалар 2026-жылдан жаңы.",
+                hero_cta1: "Пакетти тандоо", hero_cta2: "Telegramга жазыңыз",
+                hero_trust1: "Кайтаруу кепилдиги", hero_trust1_sub: "четке кагылганда",
+                hero_trust2: "3 күндөн", hero_trust2_sub: "патент алуу",
+                packages_badge: "ӨЗҮҢҮЗДҮН ЫҢГАЙЛУУ ПАКЕТИҢИЗДИ ТАНДАҢЫЗ", packages_title: "Кызмат пакеттери",
+                packages_subtitle: "Баалар толук. Патентти (10 000 ₽/ай) өзүңүз төлөйсүз.",
+                package_econ_name: "Эконом", package_econ_price: "15 000 – 20 000 ₽",
+                package_econ_item1: "Котормо + нотариус", package_econ_item2: "Негизги медициналык комиссия",
+                package_econ_item3: "Патентке экзамен", package_econ_item4: "Миграциялык каттоо + тапшыруу",
+                package_econ_item5: "МВДга билдирүү", package_econ_for: "Жаңы мигранттар, сезондук",
+                package_comf_name: "Комфорт", package_comf_price: "25 000 – 35 000 ₽",
+                package_comf_item1: "Экономдон бардыгы +", package_comf_item2: "ДМС 1 жылга",
+                package_comf_item3: "Адистин чыгышы", package_comf_item4: "MMCде кезексиз жазылуу",
+                package_comf_item5: "Жумуш берүүчүгө билдирүү", package_comf_for: "Иштеген мигранттар жана үй-бүлөлөр",
+                package_vip_name: "Комфорт +", package_vip_price: "40 000 – 50 000 ₽",
+                package_vip_item1: "Комфорттон бардыгы +", package_vip_item2: "Жылдык колдоо",
+                package_vip_item3: "РВП / ВНЖ жардамы", package_vip_item4: "Акча кайтаруу кепилдиги",
+                package_vip_item5: "VIP жазылуу жана ылдамдатуу", package_vip_for: "Үй-бүлөлөр жана узак мөөнөттүү кардарлар",
+                package_for: "Ким үчүн:", btn_choose: "Пакетти тандоо",
+                services_title: "Кошумча кызматтар",
+                add1: "Адистин чыгышы", add1_price: "5 000 ₽ дан",
+                add2: "Сүрөттөр жана көчүрмөлөр", add2_price: "1 000 ₽",
+                add3: "Кирүү тыюусун текшерүү", add3_price: "2 500 ₽",
+                add4: "Турак жай жардамы", add4_price: "1 000 ₽",
+                add5: "Жеринен котормочу", add5_price: "2 000 – 5 000 ₽",
+                add6: "Жумушка орношууга жардам", add6_price: "Комфорт+ да бекер",
+                how_badge: "ЖӨНӨКӨЙ ЖАНА ТЕЗ", how_title: "Кантип иштейт",
+                step1: "Арыз калтырыңыз", step1_desc: "Телефон, Telegram же форма аркылуу — 30 секунд",
+                step2: "Сиздин тилиңизде кеңеш", step2_desc: "Орус, тажик, өзбек, кыргыз",
+                step3: "Документтерди чогултабыз", step3_desc: "Сизге чыгуу же онлайн — баары толук",
+                step4: "Тапшыруу жана көзөмөл", step4_desc: "Баарын биз жасайбыз. Патент колуңузда!",
+                cta_text: "Бүгүн патентти расмийлештирүүгө даярсызбы?", cta_button: "Азыр Telegramга жазыңыз",
+                form_title: "Тез арыз", form_select: "Пакетти тандаңыз", form_button: "Арыз жөнөтүү — 30 секунд",
+                footer_desc: "Борбордук Азия мигранттарына Москвада расмий жардам 2022-жылдан бери.",
+                phone: "+7 (977) 365-37-31", work_hours: "Күн сайын 08:00 – 21:00",
+                footer_link1: "Купуялык саясаты", footer_link2: "Оферта келишими",
+                modal_title: "Арыз жөнөтүлдү!", modal_text: "Адисибиз 15 мүнөттүн ичинде байланышат",
+                modal_close: "Сонун, чалууну күтөм"
+            }
+        };
+
+        let currentLang = 'ru';
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.id === `lang-${lang}`);
+            });
+            
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            
+            const nameInput = document.getElementById('name');
+            const phoneInput = document.getElementById('phone');
+            if (nameInput) nameInput.placeholder = lang === 'ru' ? 'Имя' : lang === 'tj' ? 'Ном' : lang === 'uz' ? 'Ism' : 'Аты';
+            if (phoneInput) phoneInput.placeholder = lang === 'ru' ? 'Телефон или Telegram' : lang === 'tj' ? 'Телефон ё Telegram' : lang === 'uz' ? 'Telefon yoki Telegram' : 'Телефон же Telegram';
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function smoothScrollTo(section) {
+            document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectPackage(pkg) {
+            document.getElementById('package-select').value = pkg;
+            smoothScrollTo('contact');
+        }
+
+        function submitForm(e) {
+            e.preventDefault();
+            const phone = document.getElementById('phone').value;
+            if (!phone) {
+                alert(currentLang === 'ru' ? 'Укажите телефон или Telegram!' : currentLang === 'tj' ? 'Телефон ё Telegram киргизиңиз!' : currentLang === 'uz' ? 'Telefon yoki Telegramni kiriting!' : 'Телефон же Telegram киргизиңиз!');
+                return;
+            }
+            const modal = document.getElementById('success-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            e.target.reset();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('success-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        window.onload = function() {
+            switchLanguage('ru');
+            document.addEventListener('keydown', e => {
+                if (e.key === "Escape") {
+                    const modal = document.getElementById('success-modal');
+                    if (!modal.classList.contains('hidden')) closeModal();
+                }
+            });
+            console.log('%c✅ Сайт полностью обновлён! Логотип МигрантовПРО установлен по всему сайту.', 'color:#1e40af; font-size:16px; font-weight:bold');
+        };
+    </script>
+</body>
+</html>
